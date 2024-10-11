@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Breakdown Structure Diagram</title>
+    <script src="https://unpkg.com/gojs"></script>
+    <style>
+        #myDiagramDiv {
+            width: 100%;
+            height: 1000px;
+            border: 1px solid black;
+            overflow-x: scroll;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Full Work Breakdown Structure Diagram</h2>
+<div id="myDiagramDiv"></div>
+
+<script>
+    function init() {
+        var $ = go.GraphObject.make;
+
+        var myDiagram =
+            $(go.Diagram, "myDiagramDiv", {
+                "undoManager.isEnabled": true,
+                layout: $(go.TreeLayout, { angle: 90, layerSpacing: 35 }) // Tree layout for WBS
+            });
+
+        // Define the default shape and binding for nodes
+        myDiagram.nodeTemplate =
+            $(go.Node, "Auto",
+                $(go.Shape, "RoundedRectangle",
+                    { strokeWidth: 1, fill: "lightblue" }), // Default node color
+                $(go.TextBlock,
+                    { margin: 8, stroke: "black", font: "bold 14px sans-serif" },
+                    new go.Binding("text", "key"))
+            );
+
+        // Define the model data
+        var model = $(go.TreeModel);
+        model.nodeDataArray = [
+            { key: "1. Project Management", color: "lightblue" },
+
+            { key: "1.1 Initiation", parent: "1. Project Management" },
+            { key: "1.1.1 Develop Project Charter", parent: "1.1 Initiation" },
+            { key: "1.1.2 Identify Stakeholders", parent: "1.1 Initiation" },
+            { key: "1.1.3 Assemble Project Team", parent: "1.1 Initiation" },
+            { key: "1.1.4 Establish Project Governance Structure", parent: "1.1 Initiation" },
+
+            { key: "1.2 Planning", parent: "1. Project Management" },
+            { key: "1.2.1 Develop Project Management Plan", parent: "1.2 Planning" },
+            { key: "1.2.2 Plan Scope Management", parent: "1.2 Planning" },
+            { key: "1.2.3 Plan Schedule Management", parent: "1.2 Planning" },
+            { key: "1.2.4 Plan Cost Management", parent: "1.2 Planning" },
+            { key: "1.2.5 Plan Quality Management", parent: "1.2 Planning" },
+            { key: "1.2.6 Plan Resource Management", parent: "1.2 Planning" },
+            { key: "1.2.7 Plan Communications Management", parent: "1.2 Planning" },
+            { key: "1.2.8 Plan Risk Management", parent: "1.2 Planning" },
+            { key: "1.2.9 Plan Procurement Management", parent: "1.2 Planning" },
+            { key: "1.2.10 Plan Stakeholder Engagement", parent: "1.2 Planning" },
+
+            { key: "1.3 Execution", parent: "1. Project Management" },
+            { key: "1.3.1 Direct and Manage Project Work", parent: "1.3 Execution" },
+            { key: "1.3.2 Manage Project Knowledge", parent: "1.3 Execution" },
+
+            { key: "1.4 Monitoring and Controlling", parent: "1. Project Management" },
+            { key: "1.4.1 Monitor and Control Project Work", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.2 Perform Integrated Change Control", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.3 Validate Scope", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.4 Control Scope", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.5 Control Schedule", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.6 Control Costs", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.7 Control Quality", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.8 Control Resources", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.9 Monitor Communications", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.10 Monitor Risks", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.11 Control Procurements", parent: "1.4 Monitoring and Controlling" },
+            { key: "1.4.12 Monitor Stakeholder Engagement", parent: "1.4 Monitoring and Controlling" },
+
+            { key: "1.5 Closing", parent: "1. Project Management" },
+            { key: "1.5.1 Close Project or Phase", parent: "1.5 Closing" },
+            { key: "1.5.2 Finalize All Activities", parent: "1.5 Closing" },
+            { key: "1.5.3 Release Project Resources", parent: "1.5 Closing" },
+            { key: "1.5.4 Archive Project Documents", parent: "1.5 Closing" },
+
+            // ISO Certification
+            { key: "2. ISO Certification", color: "lightgreen" },
+            { key: "2.1 ISO9001 Certification", parent: "2. ISO Certification" },
+            { key: "2.1.1 Conduct Gap Analysis for ISO9001", parent: "2.1 ISO9001 Certification" },
+            { key: "2.1.2 Develop Quality Management System (QMS)", parent: "2.1 ISO9001 Certification" },
+            { key: "2.1.3 Implement QMS Processes", parent: "2.1 ISO9001 Certification" },
+            { key: "2.1.4 Perform Internal Audits (ISO9001)", parent: "2.1 ISO9001 Certification" },
+            { key: "2.1.5 Management Review Meetings", parent: "2.1 ISO9001 Certification" },
+            { key: "2.1.6 Address Non-Conformities", parent: "2.1 ISO9001 Certification" },
+            { key: "2.1.7 Schedule and Facilitate Certification Audit", parent: "2.1 ISO9001 Certification" },
+            { key: "2.1.8 Achieve ISO9001 Certification", parent: "2.1 ISO9001 Certification" },
+
+            { key: "2.2 ISO27001 Certification", parent: "2. ISO Certification" },
+            { key: "2.2.1 Conduct Gap Analysis for ISO27001", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.2 Perform Information Security Risk Assessment", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.3 Develop Information Security Management System (ISMS)", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.4 Implement ISMS Controls", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.5 Perform Internal Audits (ISO27001)", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.6 Management Review Meetings", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.7 Address Non-Conformities", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.8 Schedule and Facilitate Certification Audit", parent: "2.2 ISO27001 Certification" },
+            { key: "2.2.9 Achieve ISO27001 Certification", parent: "2.2 ISO27001 Certification" },
+
+            // Continue for the rest of the WBS items as needed (Market Expansion, Training and Development, etc.)
+        ];
+
+        myDiagram.model = model;
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
